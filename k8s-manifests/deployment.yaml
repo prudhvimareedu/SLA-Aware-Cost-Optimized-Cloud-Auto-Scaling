@@ -1,0 +1,65 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sla-microservice
+  namespace: default
+  labels:
+    app: sla-microservice
+    managed-by: drl-autoscaler
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sla-microservice
+  template:
+    metadata:
+      labels:
+        app: sla-microservice
+    spec:
+      containers:
+        - name: microservice
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sla-microservice-svc
+  namespace: default
+spec:
+  selector:
+    app: sla-microservice
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080
+  type: NodePort
+---
+# Disable default HPA — DRL agent takes control
+# apiVersion: autoscaling/v2
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: sla-hpa
+# ... (commented out — DRL replaces HPA)
