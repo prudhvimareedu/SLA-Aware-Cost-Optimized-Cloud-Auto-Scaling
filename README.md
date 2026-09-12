@@ -3,6 +3,12 @@
 > **Research-grade, production-ready** auto-scaling system with Multi-Agent DRL,
 > Transformer encoders, Safe RL, and real-time explainability.
 
+## 🌐 Live Demo
+
+**Live Dashboard:** https://sla-aware-cost-optimized-cloud-auto-scaling-production-0182.up.railway.app/
+
+> Try the live dashboard to monitor metrics, simulate workloads, configure SLA thresholds, and test scaling decisions.
+
 ---
 
 ## Novel Contributions
