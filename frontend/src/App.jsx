@@ -20,8 +20,8 @@ import {
 } from "recharts";
 
 // ── Constants ──────────────────────────────────────────────────────────────
-const API = "http://localhost:8000";
-const WS_URL = "ws://localhost:8000/ws/metrics";
+const API = process.env.REACT_APP_API_URL || "http://localhost:8000";
+const WS_URL = process.env.REACT_APP_WS_URL || "ws://localhost:8000/ws/metrics";
 const REQUEST_TYPES = ["login", "payment", "checkout", "browse", "error"];
 
 const DEFAULT_SLA = {
